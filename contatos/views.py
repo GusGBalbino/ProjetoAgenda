@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 def index(request):
     contatos = Contato.objects.all()
-    paginator = Paginator(contatos,1)
+    paginator = Paginator(contatos,10)
 
     pageNumber = request.GET.get('page')
     contatos  = paginator.get_page(pageNumber)
@@ -17,6 +17,10 @@ def index(request):
 
 def verContato(request, contato_id):
     contato = get_object_or_404(Contato, id = contato_id)
+
+    if not contato.mostrar:
+        raise Http404()
+    
     return render(request, 'contatos/verContato.html', {
         'contato':contato
     })
