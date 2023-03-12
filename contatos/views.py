@@ -5,7 +5,9 @@ from django.core.paginator import Paginator
 from django.shortcuts import render
 
 def index(request):
-    contatos = Contato.objects.all()
+    contatos = Contato.objects.order_by('-id').filter(
+        mostrar = True
+    )
     paginator = Paginator(contatos,10)
 
     pageNumber = request.GET.get('page')

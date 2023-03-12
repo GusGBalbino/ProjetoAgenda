@@ -18,7 +18,7 @@
 
 
         {%for contato in contatos%}
-            {% if contato.mostrar %}
+
             <tr>
                 <th>{{contato.id}}</th>
                 <td>
@@ -28,7 +28,6 @@
                 <td>{{contato.telefone}}</td>
                 <td>{{contato.categoria}}</td>
             </tr>
-            {%endif%}
         {%endfor%}
         </tbody>
     </table>
