@@ -1,5 +1,7 @@
 venv/
 .venv
+env
 pythonenv*
 library/venv
 bootstrap
+PIL
