@@ -3,6 +3,7 @@ from django.contrib import messages, auth
 from django.core.validators import validate_email
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .models import FormContato
 
 def login(request):
 
@@ -78,5 +79,21 @@ def cadastro(request):
 
 @login_required(redirect_field_name='login')
 def dashbord(request):
-    return render(request, 'accounts/dashbord.html')
 
+    if request.method != 'POST':
+
+        form = FormContato()
+        return render(request, 'accounts/dashbord.html', {'form' : form})
+    
+    form = FormContato(request.POST, request.FILES)
+
+    if not form.is_valid():
+
+        messages.error(request, "Dados inválidos.")
+
+        form = FormContato(request.POST)
+        return render(request, 'accounts/dashbord.html', {'form' : form})
+    
+    form.save()
+    messages.success(request, f'Contato {request.POST.get("nome")} foi criado!')
+    return redirect('dashbord')
